@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+
+.fadeIn {
+    animation: FadeIn ease-in-out .3s forwards;
+}
+
+.fadeOut {
+    animation: FadeOut ease-in-out .3s forwards;
+}
+
+@keyframes FadeIn {
+    from {
+        scale: 0;
+        opacity: 0;
+        transform: translateY(40px);
+    } to {
+        scale: 1;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes FadeOut {
+    from {
+        scale: 1;
+        opacity: 1;
+        transform: translateY(0);
+    } to {
+        scale: 0;
+        opacity: 0;
+        transform: translateY(40px);
+    }
+}
