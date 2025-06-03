@@ -1,0 +1,14 @@
+---
+import Layout from "src/layouts/Layout.astro";
+import {MedicoForm} from "src/components/medicos/MedicoForm"
+
+interface Props {
+    id: string
+}
+
+const {id} = Astro.params
+---
+
+<Layout>
+    <MedicoForm id={id}  client:visible />
+</Layout>
