@@ -1,0 +1,12 @@
+---
+import { MedicosDashboard } from "src/components/medicos/MedicosDashboard";
+import Layout from "src/layouts/Layout.astro";
+---
+
+<Layout>
+    <section class="p-4">
+        <h2 class="text-2xl text-center text-indigo-600 mb-2">Medicos</h2>
+        
+        <MedicosDashboard client:load/>
+    </section>
+</Layout>
