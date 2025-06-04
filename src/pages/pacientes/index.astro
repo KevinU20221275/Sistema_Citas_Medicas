@@ -1,0 +1,12 @@
+---
+import Layout from "src/layouts/Layout.astro";
+import {PacientesDashboard} from "src/components/pacientes/PacientesDashboard"
+---
+
+<Layout>
+    <section class="p-4">
+        <h2 class="text-2xl text-center text-indigo-600 mb-2">Pacientes</h2>
+
+        <PacientesDashboard client:visible />
+    </section>
+</Layout>
