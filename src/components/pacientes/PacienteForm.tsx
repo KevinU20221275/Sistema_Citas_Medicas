@@ -5,12 +5,13 @@ import { PacienteIcon } from "../icons/Paciente";
 import { Sexo } from "src/types/Sexo";
 
 export function PacienteForm({id} : {id? : string}){
+    const paramId = id === "nuevoPaciente" ? undefined : id
     const getPacienteById = usePacienteStore((state) => state.getPacienteById)
     const actualizarPaciente = usePacienteStore((state) => state.actualizarPaciente)
     const agregarPaciente = usePacienteStore((state) => state.agregarPaciente)
 
     const [pacienteData, setPacienteData] = useState<IPacienteInfo>({
-        id : id ?? crypto.randomUUID(),
+        id : paramId ?? crypto.randomUUID(),
         nombre :  '',
         apellido : '',
         dui : '',
@@ -23,16 +24,16 @@ export function PacienteForm({id} : {id? : string}){
     })
 
     useEffect(() => {
-        if (id){
-            const paciente = getPacienteById(id)
+        if (paramId){
+            const paciente = getPacienteById(paramId)
             if (paciente){
                 setPacienteData(paciente)
             }
         }
-    }, [id, getPacienteById])
+    }, [paramId, getPacienteById])
 
     const handleSubmit = () => {
-        if (id){
+        if (paramId){
             actualizarPaciente(pacienteData)
         } else {
             agregarPaciente(pacienteData)
