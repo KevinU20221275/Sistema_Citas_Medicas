@@ -6,12 +6,13 @@ import { Sexo } from "src/types/Sexo";
 
 
 export function MedicoForm({id} : {id? : string}){
+    const paramId = id === "nuevoMedico" ? undefined : id
     const getMedicoById = useMedicoStore((state) => state.getMedicoById)
     const actualizarMedico = useMedicoStore((state) => state.actualizarMedico)
     const agregarMedico = useMedicoStore((state) => state.agregarMedico)
 
     const [medicoData, setMedicoData] = useState<IMedicoInfo>({
-        id : id ?? crypto.randomUUID(),
+        id : paramId ?? crypto.randomUUID(),
         nombre :  '',
         apellido : '',
         dui : '',
@@ -22,13 +23,13 @@ export function MedicoForm({id} : {id? : string}){
     })
 
     useEffect(() => {
-        if (id){
-            const medico = getMedicoById(id)
+        if (paramId){
+            const medico = getMedicoById(paramId)
             if (medico){
                 setMedicoData(medico)
             }
         }
-    }, [id, getMedicoById])
+    }, [paramId, getMedicoById])
 
     const handleSubmit = () => {
         if (id){
