@@ -1,3 +1,4 @@
+import type { EstadoConsulta } from "./EstadosConsulta";
 
 export interface ICita {
   id: string;
@@ -5,5 +6,6 @@ export interface ICita {
   medicoId: string;
   fecha: Date;
   hora: string;
-  motivo: string;
+  motivoConsulta: string;
+  estado : string;
 }
