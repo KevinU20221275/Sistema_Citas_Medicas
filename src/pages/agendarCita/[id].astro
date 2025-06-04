@@ -1,0 +1,14 @@
+---
+import Layout from "src/layouts/Layout.astro";
+import {CitaForm} from "src/components/citas/CitaForm";
+
+interface Props {
+    id: string
+}
+
+const {id} = Astro.params
+---
+
+<Layout>
+    <CitaForm id={id}  client:visible />
+</Layout
