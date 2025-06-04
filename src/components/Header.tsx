@@ -10,17 +10,17 @@ export function HeaderMenu(){
                         >Home</a>
                     </li>
                     <li>
-                        <a href={`/pacientes-form/${undefined}`}
+                        <a href={`/pacientes-form/${'nuevoPaciente'}`}
                         className="flex p-2 px-3 rounded-full hover:bg-indigo-400 hover:text-white text-sm transition-all"
                         >Agregar Paciente</a>
                     </li>
                     <li>
-                        <a href={`/medicos-form/${undefined}`}
+                        <a href={`/medicos-form/${'nuevoMedico'}`}
                         className="flex p-2 px-3 rounded-full hover:bg-indigo-400 hover:text-white text-sm transition-all"
                         >Agregar Medico</a>
                     </li>
                     <li>
-                        <a href="/citas"
+                        <a href={`/agendarCita/${'nuevaCita'}`}
                         className="flex p-2 px-3 rounded-full hover:bg-indigo-400 hover:text-white text-sm transition-all"
                         >Agendar Cita</a>
                     </li>
