@@ -1,13 +1,6 @@
 export function CitaIcon({ className }: { className: string }) {
   return (
-    <svg
-      fill="currentColor"
-      className={className}
-      viewBox="0 0 24 24"
-      data-name="Layer 1"
-      id="Layer_1"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g
         id="SVGRepo_tracerCarrier"
@@ -15,8 +8,14 @@ export function CitaIcon({ className }: { className: string }) {
         strokeLinejoin="round"
       ></g>
       <g id="SVGRepo_iconCarrier">
-        <title></title>
-        <path d="M18,5V3a1,1,0,0,0-2,0V5H8V3A1,1,0,0,0,6,3V5H2V21H22V5Zm2,14H4V7H20ZM9,10H7v2H9Zm0,4H7v2H9Zm8-4H11v2h6Zm0,4H11v2h6Z"></path>
+        {" "}
+        <path
+          d="M14 8.5V6.2C14 5.0799 14 4.51984 13.782 4.09202C13.5903 3.71569 13.2843 3.40973 12.908 3.21799C12.4802 3 11.9201 3 10.8 3H7.2C6.0799 3 5.51984 3 5.09202 3.21799C4.71569 3.40973 4.40973 3.71569 4.21799 4.09202C4 4.51984 4 5.0799 4 6.2V17.8C4 18.9201 4 19.4802 4.21799 19.908C4.40973 20.2843 4.71569 20.5903 5.09202 20.782C5.51984 21 6.0799 21 7.2 21H9.5M4 13H9M4 17H9M11 8.00001L7 8M9 6V10M18.2 13.5C18.2 14.3284 17.5284 15 16.7 15C15.8716 15 15.2 14.3284 15.2 13.5C15.2 12.6716 15.8716 12 16.7 12C17.5284 12 18.2 12.6716 18.2 13.5ZM20 21V20.5C20 19.1193 18.8807 18 17.5 18H16C14.6193 18 13.5 19.1193 13.5 20.5V21H20Z"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        ></path>{" "}
       </g>
     </svg>
   );
