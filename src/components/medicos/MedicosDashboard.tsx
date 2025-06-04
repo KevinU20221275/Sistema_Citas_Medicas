@@ -16,7 +16,6 @@ export function MedicosDashboard(){
     }
 
     const handleEditHorario = (horario : IHorarioInfo) => {
-        console.log(horario)
         setHorario(horario)
         setShowModal(true)
     }
