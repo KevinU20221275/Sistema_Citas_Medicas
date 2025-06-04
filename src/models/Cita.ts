@@ -1,3 +1,4 @@
+import type { EstadoConsulta } from "src/types/EstadosConsulta";
 import type { ICita } from "src/types/ICitaInfo";
 
 export class Cita {
@@ -7,7 +8,8 @@ export class Cita {
         public medicoId: string,
         public fecha: Date,
         public hora: string,
-        public motivo: string
+        public motivoConsulta: string,
+        public estado : string
     ) {}
 
     public mostrarInfo() : ICita {
@@ -17,7 +19,17 @@ export class Cita {
             medicoId : this.medicoId,
             fecha : this.fecha,
             hora : this.hora,
-            motivo : this.motivo
+            motivoConsulta : this.motivoConsulta,
+            estado: this.estado
         }
+    }
+
+    public reprogramarCita(fecha: Date, hora: string): void {
+        this.fecha = fecha
+        this.hora = hora
+    }
+
+    public actualizarEstado(nuevoEstado : EstadoConsulta) : void {
+        this.estado = nuevoEstado
     }
 }
