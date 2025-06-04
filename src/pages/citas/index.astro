@@ -1,0 +1,12 @@
+---
+import { CitasDashboard } from "src/components/citas/CitasDashboard";
+import Layout from "src/layouts/Layout.astro";
+---
+
+<Layout>
+    <section class="p-4">
+        <h2 class="text-2xl text-center text-indigo-600 mb-2">Citas</h2>
+        
+        <CitasDashboard client:load/>
+    </section>
+</Layout>
