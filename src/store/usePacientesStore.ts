@@ -2,10 +2,10 @@ import { create } from "zustand";
 import { Paciente } from "src/models/Paciente";
 import type { IPacienteInfo } from "src/types/IPacienteInfo";
 
-export const pacientesIniciales = [
-  new Paciente("pac001","Andrea","Martínez","12345678-9","7888-4321","Col. Médica, San Salvador",28,"Femenino",58.5,1.65),
-  new Paciente("pac002","Roberto","Hernández","23456789-0","7011-3344","Santa Ana Centro",35,"Masculino",75.2,1.78),
-  new Paciente("pac003","Elías","Castro","34567890-1","7899-1122","Soyapango, San Salvador",22,"No binario",63.0,1.72)
+export const pacientesIniciales : Paciente[] = [
+  new Paciente("pac001","Andrea","Martínez","12345678-9","7888-4321","Col. Médica, San Salvador","Femenino",28,58.5,1.65),
+  new Paciente("pac002","Roberto","Hernández","23456789-0","7011-3344","Santa Ana Centro","Masculino",35,75.2,1.78),
+  new Paciente("pac003","Elías","Castro","34567890-1","7899-1122","Soyapango, San Salvador","No binario",22,63.0,1.72)
 ];
 
 
@@ -27,12 +27,12 @@ export const usePacienteStore = create<State>((set, get) => ({
             data.dui,
             data.telefono,
             data.direccion,
-            data.edad,
             data.sexo,
+            data.edad,
             data.peso,
             data.altura
         )
-
+            
         set((state) => ({pacientes : [...state.pacientes, nuevoPaciente]}))
     },
     actualizarPaciente: (data) => {
