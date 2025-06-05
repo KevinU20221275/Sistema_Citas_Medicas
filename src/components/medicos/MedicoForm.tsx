@@ -1,8 +1,13 @@
+// import hooks
 import { useEffect, useState } from "react";
 import { useMedicoStore } from "src/store/useMedicoStore";
+// import types
 import type { IMedicoInfo } from "src/types/IMedicoInfo";
+import { Generos } from "src/types/Genero";
+// import icons
 import { MedicoIcon } from "../icons/Medico";
-import { Sexo } from "src/types/Sexo";
+// import const
+import { ESPECIALIDADES_MEDICAS } from "src/const/especialidadesMedicas";
 
 
 export function MedicoForm({id} : {id? : string}){
@@ -32,7 +37,7 @@ export function MedicoForm({id} : {id? : string}){
     }, [paramId, getMedicoById])
 
     const handleSubmit = () => {
-        if (id){
+        if (paramId){
             actualizarMedico(medicoData)
         } else {
             agregarMedico(medicoData)
@@ -42,10 +47,10 @@ export function MedicoForm({id} : {id? : string}){
     return (
         <section className="p-6">
             <h3 className="text-2xl text-center text-indigo-600 font-medium">Ingrese la informacion del medico</h3>
-            <article className="flex py-6">
+            <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-3">
                 <form action=""
                 onSubmit={handleSubmit}
-                className="grid grid-cols-2 gap-5 w-2xl"
+                className="grid grid-cols-2 gap-5 w-full md:col-span-2"
                 >
                     <fieldset>
                         <label htmlFor="nombre" className="block mb-1">Nombre</label>
@@ -92,21 +97,22 @@ export function MedicoForm({id} : {id? : string}){
                         />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="sexo" className="block mb-1">Sexo</label>
-                        <select name="sexo" id="sexo"
+                        <label htmlFor="genero" className="block mb-1">Genero</label>
+                        <select name="genero" id="genero"
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setMedicoData({
                             ...medicoData,
                             sexo : e.target.value
                         })}
-                        defaultValue={medicoData.sexo}
+                        value={medicoData.sexo}
+                        
                         >
-                            <option value="">Seleccione el Sexo</option>
-                            <option value={Sexo.Masculino}>{Sexo.Masculino}</option>
-                            <option value={Sexo.Femenino}>{Sexo.Femenino}</option>
-                            <option value={Sexo.NoBinario}>{Sexo.NoBinario}</option>
-                            <option value={Sexo.PrefieroNoDecirlo}>{Sexo.PrefieroNoDecirlo}</option>
-                            <option value={Sexo.Otro}>{Sexo.Otro}</option>
+                            <option value="">Seleccione el Generos</option>
+                            <option value={Generos.Masculino}>{Generos.Masculino}</option>
+                            <option value={Generos.Femenino}>{Generos.Femenino}</option>
+                            <option value={Generos.NoBinario}>{Generos.NoBinario}</option>
+                            <option value={Generos.PrefieroNoDecirlo}>{Generos.PrefieroNoDecirlo}</option>
+                            <option value={Generos.Otro}>{Generos.Otro}</option>
                         </select>
                     </fieldset>
                     <fieldset>
@@ -121,21 +127,29 @@ export function MedicoForm({id} : {id? : string}){
                         />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="especialidad" className="block mb-1">Especialidad</label>
-                        <input type="text" id="especialidad" placeholder="Medicina General" 
+                        <label htmlFor="genero" className="block mb-1">Especialidad</label>
+                        <select name="genero" id="genero"
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setMedicoData({
                             ...medicoData,
                             especialidad : e.target.value
                         })}
-                        defaultValue={medicoData.especialidad}
-                        />
+                        value={medicoData.especialidad}
+                        
+                        >
+                            <option value="">Seleccione la Especialidad</option>
+                            {
+                                ESPECIALIDADES_MEDICAS.map((e) => <option key={e.especialidad + 'option'} value={e.especialidad} >{e.especialidad}</option>)
+                            }
+                        </select>
                     </fieldset>
                     <fieldset className="col-span-2 flex items-center justify-center">
-                        <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">{id ? 'Actualizar' : 'Agregar'}</button>
+                        <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">{paramId ? 'Actualizar' : 'Agregar'}</button>
                     </fieldset>
                 </form>
-                <MedicoIcon className={'w-72 text-indigo-500'} />
+                <div className="w-full hidden lg:flex justify-center items-center">
+                    <MedicoIcon className={'w-72 text-indigo-500'} />
+                </div>
             </article>
         </section>
     )
