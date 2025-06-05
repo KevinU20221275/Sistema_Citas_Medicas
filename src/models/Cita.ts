@@ -32,4 +32,8 @@ export class Cita {
     public actualizarEstado(nuevoEstado : EstadoConsulta) : void {
         this.estado = nuevoEstado
     }
+
+    public obtenerFecha() : Date {
+        return new Date(`${this.fecha.toDateString()} ${this.hora}`)
+    }
 }
