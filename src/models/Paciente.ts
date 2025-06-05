@@ -9,12 +9,12 @@ export class Paciente extends Persona {
         dui : string,
         telefono:string,
         direccion:string,
+        sexo:string,
         public edad: number,
-        public sexo : string,
         public peso: number,
         public altura: number
     ){
-        super(id, nombre, apellido, dui, telefono, direccion);
+        super(id, nombre, apellido, dui, telefono, direccion, sexo);
     }
 
 
