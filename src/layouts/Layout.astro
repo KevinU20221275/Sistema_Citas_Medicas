@@ -19,12 +19,12 @@ import { ClientRouter } from "astro:transitions";
 		<div id="app" class="h-screen relative">
 			
 			<header class="[grid-area:header] flex justify-between items-center border-b-[1px] border-zinc-300 px-4 py-3">
-				<HeaderMenu/>
+				<HeaderMenu client:load/>
 			</header>
 			<aside class="[grid-area:aside] py-8 px-6 border-r-[1px] border-zinc-300">
-				<AsideMenu/>
+				<AsideMenu client:load/>
 			</aside>
-			<main class="[grid-area:main]">
+			<main class="[grid-area:main] overflow-y-auto">
 				<slot />
 			</main>
 		</div>
