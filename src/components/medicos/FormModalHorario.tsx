@@ -2,24 +2,19 @@
 import { useState, useEffect } from "react"
 // import types
 import { DiaSemana } from "src/types/DiaSemana"
+import type { FormModalHorarioProps } from "src/types/definitions"
 import type { IHorarioInfo } from "src/types/IHorarioInfo"
 // import icons
 import { CloseIcon } from "../icons/CloseIcon";
 // import store
 import { useHorariosStore } from "src/store/useHorariosStore"
 
-
-interface FormModalProps {
-    horario?: IHorarioInfo;
-    medicoId?: string;
-    closeModal: (show:boolean) => void;
-    resetHorarioData: (arg:undefined) => void
-}
-
-export function FormModalHorario({horario, medicoId, closeModal, resetHorarioData}: FormModalProps){
+export function FormModalHorario({horario, medicoId, closeModal, resetHorarioData}: FormModalHorarioProps){
+    const horarios = useHorariosStore((state) => state.horarios)
     const [isClosing, setIsClosing] = useState(false)
     const [errors, setErrors] = useState({
-        errorHoraFin: ''
+        errorHoraFin: '',
+        errorHorario: ''
     })
     const [horarioData, setHorarioData] = useState<IHorarioInfo>({
         id: horario?.id ?? crypto.randomUUID(),
@@ -46,6 +41,21 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
             })
             return
         } 
+        const horarioMedico = horarios.filter((h) => h.dia === horarioData.dia && h.medicoId === horarioData.medicoId)
+
+        if (horarioMedico.length > 0){
+            const hasHorario = horarioMedico.some((h) =>
+                !(horarioData.horaFin <= h.horaInicio || horarioData.horaInicio >= h.horaFin)
+            )
+
+            if (hasHorario) {
+                setErrors((prev) => ({
+                    ...prev,
+                    errorHorario: 'El médico ya posee un horario que se solapa con las horas ingresadas. Por favor, elige un horario diferente o edita el existente.'
+                }))
+                return 
+            }
+        }
 
         if (horario?.id){
             actualizarHorario(horarioData)
@@ -85,6 +95,12 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                     <select name="dia" id="dia" required
                     defaultValue={horarioData.dia}
                     className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
+                    onChange={(e) => {
+                        setHorarioData((prev) => ({
+                            ...prev,
+                            dia : e.target.value
+                        }))
+                    }}
                     >
                         <option value="">Seleccione el dia</option>
                         <option value={DiaSemana.Lunes}>{DiaSemana.Lunes}</option>
@@ -124,6 +140,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                     />
                     <span className="text-xs text-red-600">{errors.errorHoraFin}</span>
                 </fieldset>
+                <span className="text-xs text-red-600">{errors.errorHorario}</span>
                 <fieldset className="flex justify-center items-center pt-1">
                     <button className="py-1.5 px-3 text-white bg-indigo-400 hover:bg-indigo-500 rounded-md cursor-pointer">{horario?.id ? 'Actualizar' : 'Agregar'}</button>
                 </fieldset>
