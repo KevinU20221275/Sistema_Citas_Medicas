@@ -30,6 +30,9 @@ export const useMedicoStore = create<State>((set, get) => ({
             data.especialidad
         )
 
+        console.log(nuevoMedico.mostrarInfo())
+        console.log("agregado")
+
         set((state) => ({medicos : [...state.medicos, nuevoMedico]}))
     },
     actualizarMedico : (data) => {
