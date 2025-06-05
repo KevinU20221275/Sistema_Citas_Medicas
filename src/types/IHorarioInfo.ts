@@ -1,9 +1,7 @@
-import type { DiaSemana } from "./DiaSemana";
-
 export interface IHorarioInfo {
     id : string,
     medicoId : string,
-    dia: DiaSemana,
+    dia: string,
     horaInicio: string,
     horaFin: string,
 }
