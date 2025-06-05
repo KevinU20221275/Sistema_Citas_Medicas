@@ -1,29 +1,13 @@
-// import store
+// import icons
 import { CitaIcon } from "../icons/CitaIcon";
-import { EstadoConsulta } from "src/types/EstadosConsulta";
 import { Calendario } from "../icons/Calendario";
 import { RelojIcon } from "../icons/Reloj";
 
-export interface CitaDetallada {
-    paciente: string;
-    medico: string;
-    id: string;
-    pacienteId: string;
-    medicoId: string;
-    fecha: Date;
-    hora: string;
-    motivoConsulta: string;
-    estado: string;
-}
+// import types
+import { EstadoConsulta } from "src/types/EstadosConsulta";
+import type { CitaCardProps } from "src/types/definitions";
 
-interface CardProps {
-    cita : CitaDetallada;
-    reprogramarCita: (id:string, fecha:string, hora:string, medicoId:string) => void
-    cambiarEstado: (id:string, estado : string) => void;
-    eliminarCita: (id:string) => void;
-}
-
-export function CitaCard({cita, reprogramarCita, cambiarEstado, eliminarCita}: CardProps){
+export function CitaCard({cita, reprogramarCita, cambiarEstado, eliminarCita}: CitaCardProps){
     const {id, paciente, pacienteId, medico, medicoId, fecha, hora, motivoConsulta, estado} = cita
     const fechaFormateada = fecha.toLocaleDateString("es-Es", {
         weekday: "long",
