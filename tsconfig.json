@@ -10,10 +10,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@src/*" : ["/src/*"],
-      "@components/*" : ["/components/*"]
+      "@src/*" : ["src/*"],
+      "@components/*" : ["src/components/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react"
-  }
+  },
+  "module": "CommonJS",
+  "esModuleInterop": true,
+  "moduleResolution": "Node",
+  "types": ["jest", "node"]
 }
