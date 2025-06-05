@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useCitasDetalladas } from "src/hooks/useCitasDetalladas";
 import { CitaCard } from "./CitaCard";
 import { ReprogramarCitaModal } from "./ReprogramarCitaModal";
 import { ActualizarEstadoModal } from "./ActualizarEstadoModal";
 import { EstadoConsulta } from "src/types/EstadosConsulta";
 import { useCitaStore } from "src/store/useCitasStore";
+import { CitasFiltersPanel } from "./CitasFiltersPanel";
+import { useCitasFilter } from "src/hooks/useCitasFilter";
 
 export function CitasDashboard(){
-    const {citasDetalladas} = useCitasDetalladas()
+    const {citasFiltradas, filters, setFilters} = useCitasFilter()
     const eliminarCita = useCitaStore((state) => state.eliminarCita)
     const [dataEstado, setDataEstado] = useState({
         id: '',
@@ -51,11 +52,12 @@ export function CitasDashboard(){
         <section className="grid grid-cols-4 gap-2">
             {estadoModal && <ActualizarEstadoModal id={dataEstado.id} estado={dataEstado.estado} closeModal={setEstadoModal} />}
             {showModal && <ReprogramarCitaModal citaId={dataCita.id} fecha={dataCita.fecha} hora={dataCita.hora} medicoId={dataCita.medicoId} closeModal={setShowModal}  />}
+            <CitasFiltersPanel className="col-span-4" filters={filters} setFilters={setFilters} />
             {
-                citasDetalladas.map((c) => <CitaCard key={c.id} cita={c} reprogramarCita={handleReprogramarCita} cambiarEstado={handleCambiarEstado} eliminarCita={handleDelete} />)
+                citasFiltradas.reverse().map((c) => <CitaCard key={c.id} cita={c} reprogramarCita={handleReprogramarCita} cambiarEstado={handleCambiarEstado} eliminarCita={handleDelete} />)
             }
             {
-                citasDetalladas.length === 0 && <p className="text-zinc-600">No hay citas</p>
+                citasFiltradas.length === 0 && <p className="text-zinc-600">No hay citas</p>
             }
         </section>
     )
