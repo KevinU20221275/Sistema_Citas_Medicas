@@ -1,26 +1,40 @@
+// import hooks
 import { useEffect, useState } from "react";
+// import stores
 import { usePacienteStore } from "src/store/usePacientesStore";
+// import types
 import type { IPacienteInfo } from "src/types/IPacienteInfo";
+import { Generos } from "src/types/Genero";
+// import icons
 import { PacienteIcon } from "../icons/Paciente";
-import { Sexo } from "src/types/Sexo";
+// import helper
+import { validatePacientForm } from "src/lib/validarPacienteForm";
 
 export function PacienteForm({id} : {id? : string}){
-    const paramId = id === "nuevoPaciente" ? undefined : id
+    const paramId = (id === "nuevoPaciente") ? undefined : id
     const getPacienteById = usePacienteStore((state) => state.getPacienteById)
     const actualizarPaciente = usePacienteStore((state) => state.actualizarPaciente)
     const agregarPaciente = usePacienteStore((state) => state.agregarPaciente)
+
+    const [errors, setErrors] = useState({
+        duiError : '',
+        edadError : '',
+        telefonoError : '',
+        pesoError : '',
+        alturaError : ''
+    })
 
     const [pacienteData, setPacienteData] = useState<IPacienteInfo>({
         id : paramId ?? crypto.randomUUID(),
         nombre :  '',
         apellido : '',
         dui : '',
-        edad : 0,
+        edad : 1,
         telefono : '',
         direccion : '',
         sexo : '',
-        peso : 0,
-        altura : 0
+        peso : 1,
+        altura : 1
     })
 
     useEffect(() => {
@@ -33,6 +47,12 @@ export function PacienteForm({id} : {id? : string}){
     }, [paramId, getPacienteById])
 
     const handleSubmit = () => {
+        const {isValid, error} = validatePacientForm(pacienteData)
+        if (!isValid) {
+            setErrors(error)
+            return
+        }
+
         if (paramId){
             actualizarPaciente(pacienteData)
         } else {
@@ -43,14 +63,24 @@ export function PacienteForm({id} : {id? : string}){
     return (
         <section className="p-6">
             <h3 className="text-2xl text-center text-indigo-600 font-medium">Ingrese la informacion del paciente</h3>
-            <article className="flex py-6">
+            <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-3">
                 <form action=""
-                onSubmit={handleSubmit}
-                className="grid grid-cols-2 gap-5 w-2xl"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    setErrors({
+                        duiError : '',
+                        edadError : '',
+                        telefonoError : '',
+                        pesoError : '',
+                        alturaError : ''
+                    })
+                    handleSubmit()
+                }}
+                className="grid grid-cols-2 gap-5 w-full md:col-span-2"
                 >
                     <fieldset>
                         <label htmlFor="nombre" className="block mb-1">Nombre</label>
-                        <input type="text" id="nombre" placeholder="Juan Simon"
+                        <input type="text" id="nombre" placeholder="Juan Simon" required
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -61,7 +91,7 @@ export function PacienteForm({id} : {id? : string}){
                     </fieldset>
                     <fieldset>
                         <label htmlFor="apellido" className="block mb-1">Apellido</label>
-                        <input type="text" id="apellido" placeholder="Perez Gonzales"
+                        <input type="text" id="apellido" placeholder="Perez Gonzales" required
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -72,7 +102,7 @@ export function PacienteForm({id} : {id? : string}){
                     </fieldset>
                     <fieldset>
                         <label htmlFor="dui" className="block mb-1">Dui</label>
-                        <input type="text" id="dui" placeholder="09090909-8"
+                        <input type="text" id="dui" placeholder="09090909-8" maxLength={10}  required
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -80,21 +110,23 @@ export function PacienteForm({id} : {id? : string}){
                         })}
                         defaultValue={pacienteData.dui}
                         />
+                        <span className="text-xs text-red-600">{errors.duiError}</span>
                     </fieldset>
                     <fieldset>
                         <label htmlFor="edad" className="block mb-1">Edad</label>
-                        <input type="text" id="edad" placeholder="20" 
+                        <input type="number" id="edad" placeholder="20" min={1} max={120} 
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
-                            edad : parseFloat(e.target.value)
+                            edad : parseInt(e.target.value)
                         })}
                         defaultValue={pacienteData.edad}
                         />
+                        <span className="text-xs text-red-600">{errors.edadError}</span>
                     </fieldset>
                     <fieldset>
                         <label htmlFor="telefono" className="block mb-1">Telefono</label>
-                        <input type="text" id="telefono" placeholder="7875-9090"
+                        <input type="text" id="telefono" placeholder="7875-9090" maxLength={9} minLength={9}
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full" 
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -102,6 +134,7 @@ export function PacienteForm({id} : {id? : string}){
                         })}
                         defaultValue={pacienteData.telefono}
                         />
+                        <span className="text-xs text-red-600">{errors.telefonoError}</span>
                     </fieldset>
                     <fieldset>
                         <label htmlFor="direccion" className="block mb-1">Direccion</label>
@@ -115,26 +148,26 @@ export function PacienteForm({id} : {id? : string}){
                         />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="sexo" className="block mb-1">Sexo</label>
-                        <select name="sexo" id="sexo"
+                        <label htmlFor="genero" className="block mb-1">Generos</label>
+                        <select name="genero" id="genero"
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
                             sexo : e.target.value
                         })}
-                        defaultValue={pacienteData.sexo}
+                        value={pacienteData.sexo}
                         >
-                            <option value="">Seleccione el Sexo</option>
-                            <option value={Sexo.Masculino}>{Sexo.Masculino}</option>
-                            <option value={Sexo.Femenino}>{Sexo.Femenino}</option>
-                            <option value={Sexo.NoBinario}>{Sexo.NoBinario}</option>
-                            <option value={Sexo.PrefieroNoDecirlo}>{Sexo.PrefieroNoDecirlo}</option>
-                            <option value={Sexo.Otro}>{Sexo.Otro}</option>
+                            <option value="">Seleccione el Generos</option>
+                            <option value={Generos.Masculino}>{Generos.Masculino}</option>
+                            <option value={Generos.Femenino}>{Generos.Femenino}</option>
+                            <option value={Generos.NoBinario}>{Generos.NoBinario}</option>
+                            <option value={Generos.PrefieroNoDecirlo}>{Generos.PrefieroNoDecirlo}</option>
+                            <option value={Generos.Otro}>{Generos.Otro}</option>
                         </select>
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="peso" className="block mb-1">Peso</label>
-                        <input type="text" id="peso" placeholder="80" 
+                        <label htmlFor="peso" className="block mb-1">Peso (Kg)</label>
+                        <input type="text" id="peso" placeholder="80" maxLength={3}
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -142,10 +175,11 @@ export function PacienteForm({id} : {id? : string}){
                         })}
                         defaultValue={pacienteData.peso}
                         />
+                        <span className="text-xs text-red-600">{errors.pesoError}</span>
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="altura" className="block mb-1">Altura</label>
-                        <input type="text" id="altura" placeholder="1.78" 
+                        <label htmlFor="altura" className="block mb-1">Altura (Metros)</label>
+                        <input type="text" id="altura" placeholder="1.78" maxLength={4} 
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setPacienteData({
                             ...pacienteData,
@@ -153,12 +187,15 @@ export function PacienteForm({id} : {id? : string}){
                         })}
                         defaultValue={pacienteData.altura}
                         />
+                        <span className="text-xs text-red-600">{errors.alturaError}</span>
                     </fieldset>
                     <fieldset className="col-span-2 flex items-center justify-center">
                         <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">Agregar</button>
                     </fieldset>
                 </form>
-                <PacienteIcon className={'w-72 text-indigo-500'} />
+                <div className="w-full hidden lg:flex justify-center items-center">
+                    <PacienteIcon className={'w-72 text-indigo-500'} />
+                </div>
             </article>
         </section>
     )
