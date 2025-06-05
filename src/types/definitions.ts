@@ -25,3 +25,16 @@ export interface CitaCardProps {
     cambiarEstado: (id:string, estado : string) => void;
     eliminarCita: (id:string) => void;
 }
+
+export interface CitasFilters {
+    citas: string;
+    medico: string;
+    paciente: string;
+    estado: string;
+}
+
+export interface CitasFilterPanelProps{
+    className:string;
+    filters : CitasFilters;
+    setFilters : React.Dispatch<React.SetStateAction<CitasFilters>>
+}
