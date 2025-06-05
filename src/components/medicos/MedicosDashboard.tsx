@@ -1,8 +1,11 @@
+// import hooks
 import { useState } from "react";
+import { useMedicosFilters } from "src/hooks/useMedicosFilter";
+// import types
 import type { IHorarioInfo } from "src/types/IHorarioInfo";
+// import components
 import { MedicoCard } from "./MedicoCard";
 import { FormModalHorario } from "./FormModalHorario";
-import { useMedicosFilters } from "src/hooks/useMedicosFilter";
 import { MedicosFilterPanel } from "./MedicosFilterView";
 
 export function MedicosDashboard(){
