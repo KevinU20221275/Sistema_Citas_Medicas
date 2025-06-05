@@ -6,16 +6,21 @@ export function PacientesDashboard(){
     const [search, setSearch] = useState<string>('')
 
     const pacientes = usePacienteStore((state) => state.pacientes)
+    const eliminarPaciente = usePacienteStore((state) => state.eliminarPaciente)
 
     const pacientesFiltrados = useMemo(() => {
-        if (search.length > 0){
+        if (search && search.length > 0){
             return pacientes.filter((p) => 
                 p.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase()) || 
                 p.apellido.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
         } else {
             return pacientes
         }
-    }, [search])
+    }, [search, pacientes])
+
+    const handleDelete = (id:string) => {
+        eliminarPaciente(id)
+    }
 
     return (
         <section className="grid grid-cols-4 gap-2">
@@ -26,7 +31,7 @@ export function PacientesDashboard(){
                 />
             </div>
             {
-                pacientesFiltrados.map((p) => <PacienteCard key={p.id} paciente={p} />)
+                pacientesFiltrados.map((p) => <PacienteCard key={p.id} paciente={p} eliminar={handleDelete} />)
             }
             {pacientesFiltrados.length === 0 && <p>Sin resultados</p>}
         </section>
