@@ -18,3 +18,10 @@ export interface CitaDetallada {
     motivoConsulta: string;
     estado: string;
 }
+
+export interface CitaCardProps {
+    cita : CitaDetallada;
+    reprogramarCita: (id:string, fecha:string, hora:string, medicoId:string) => void
+    cambiarEstado: (id:string, estado : string) => void;
+    eliminarCita: (id:string) => void;
+}
