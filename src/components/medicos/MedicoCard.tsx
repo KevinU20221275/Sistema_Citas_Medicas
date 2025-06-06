@@ -14,9 +14,10 @@ interface CardProps {
     medico : IMedicoInfo;
     agregarHorario: (id:string) => void;
     actualizarHorario: (horario: IHorarioInfo) => void;
+    eliminarMedico : (id:string) => void;
 }
 
-export function MedicoCard({medico, agregarHorario, actualizarHorario}: CardProps){
+export function MedicoCard({medico, agregarHorario, actualizarHorario, eliminarMedico}: CardProps){
     const {id, nombre, apellido, dui, sexo, telefono, direccion, especialidad} = medico
     const horarios = useHorariosStore((state) => state.horarios)
     const eliminarHorario = useHorariosStore((state) => state.eliminarHorario)
@@ -60,6 +61,7 @@ export function MedicoCard({medico, agregarHorario, actualizarHorario}: CardProp
                 >Editar Medico</a>
                 
                 <button
+                onClick={() => eliminarMedico(id)}
                 className="btn-card px-3 py-1 bg-indigo-400 rounded-md text-xs text-white cursor-pointer hover:bg-indigo-500 transition-all"
                 >Eliminar Medico</button>
             </div>

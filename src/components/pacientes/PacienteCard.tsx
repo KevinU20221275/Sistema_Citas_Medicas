@@ -18,18 +18,12 @@ export function PacienteCard({paciente, eliminar}: {paciente: IPacienteInfo, eli
                 <p><span className="text-indigo-600">Telefono:</span> {telefono}</p>
                 <p><span className="text-indigo-600">Direccion:</span> {direccion}</p>
             </div>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-2 gap-1.5 px-2">
                 <h2 className="col-span-2 text-base text-center text-indigo-600">Informacion Complementaria</h2>
                 <p className="flex gap-1"><span className="text-indigo-600"><GeneroIcon className="w-6" /> </span> {sexo}</p>
                 <p className="flex gap-1"><span className="text-indigo-600"><EdadIcon className="w-6" /> </span> {edad} años</p>
                 <p className="flex gap-1"><span className="text-indigo-600"><PesoIcon className="w-6"/> </span> {peso} Kg</p>
                 <p className="flex gap-1"><span className="text-indigo-600"><EstaturaIcon className="w-6"/> </span> {altura} metros</p>
-            </div>
-            <div className="">
-                <span className="text-indigo-600">Citas:</span>
-                <ul className="flex flex-col items-start justify-center list-disc pl-7">
-                            
-                </ul>
             </div>
             <div className="grid grid-cols-2 gap-1.5 text-center py-2">
                 <a

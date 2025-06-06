@@ -30,8 +30,8 @@ export function PacientesDashboard(){
     if (!mounted) return null;
 
     return (
-        <section className="grid grid-cols-4 gap-2">
-            <div className="col-span-4">
+        <section className="grid grid-cols-3 gap-2">
+            <div className="col-span-3">
                 <input type="text" placeholder="Buscar paciente por Nombre o Apellido" className="px-4 bg-white  py-2 rounded-md w-96"
                 onChange={(e) => setSearch(e.target.value)}
                 defaultValue={search}
