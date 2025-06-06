@@ -1,5 +1,5 @@
 // import hooks
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import stores
 import { usePacienteStore } from "src/store/usePacientesStore";
 // import types
@@ -9,33 +9,22 @@ import { Generos } from "src/types/Genero";
 import { PacienteIcon } from "../icons/Paciente";
 // import helper
 import { validatePacientForm } from "src/lib/validarPacienteForm";
+// components
+import { ModalAlert } from "../ModalAlert";
+// const
+import { INITIAL_STATE_PACIENTE_FORM, INITIAL_STATE_PACIENTE_FORM_ERRORS } from "@src/const/initialsStates";
 
 export function PacienteForm({id} : {id? : string}){
     const paramId = (id === "nuevoPaciente") ? undefined : id
-    const getPacienteById = usePacienteStore((state) => state.getPacienteById)
-    const actualizarPaciente = usePacienteStore((state) => state.actualizarPaciente)
-    const agregarPaciente = usePacienteStore((state) => state.agregarPaciente)
-
-    const [errors, setErrors] = useState({
-        duiError : '',
-        edadError : '',
-        telefonoError : '',
-        pesoError : '',
-        alturaError : ''
-    })
-
+    const {getPacienteById, actualizarPaciente, agregarPaciente} = usePacienteStore((state) => state)
+    const [showModal, setShowModal] = useState(false)
+    const formRef = useRef<HTMLFormElement | null>(null)
     const [pacienteData, setPacienteData] = useState<IPacienteInfo>({
-        id : paramId ?? crypto.randomUUID(),
-        nombre :  '',
-        apellido : '',
-        dui : '',
-        edad : 1,
-        telefono : '',
-        direccion : '',
-        sexo : '',
-        peso : 1,
-        altura : 1
+        ...INITIAL_STATE_PACIENTE_FORM,
+        id : crypto.randomUUID()
     })
+    const [errors, setErrors] = useState(INITIAL_STATE_PACIENTE_FORM_ERRORS)
+
 
     useEffect(() => {
         if (paramId){
@@ -58,22 +47,23 @@ export function PacienteForm({id} : {id? : string}){
         } else {
             agregarPaciente(pacienteData)
         }
+        setShowModal(true)
+        formRef.current?.reset()
+        setPacienteData({
+            ...INITIAL_STATE_PACIENTE_FORM,
+            id : crypto.randomUUID()
+        })
     }
 
     return (
         <section className="p-6">
             <h3 className="text-2xl text-center text-indigo-600 font-medium">Ingrese la informacion del paciente</h3>
+            {showModal && <ModalAlert redirect="/pacientes" mensaje={`Paciente ${paramId ? 'actualizado' : 'agregado'} con exito`} closeModal={setShowModal} isEditing={paramId} />}
             <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-3">
                 <form action=""
                 onSubmit={(e) => {
                     e.preventDefault()
-                    setErrors({
-                        duiError : '',
-                        edadError : '',
-                        telefonoError : '',
-                        pesoError : '',
-                        alturaError : ''
-                    })
+                    setErrors(INITIAL_STATE_PACIENTE_FORM_ERRORS)
                     handleSubmit()
                 }}
                 className="grid grid-cols-2 gap-5 w-full md:col-span-2"
