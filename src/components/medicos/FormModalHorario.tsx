@@ -80,7 +80,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                 e.preventDefault()
                 handleSubmit()
                 }} 
-            className={`flex flex-col relative gap-2 bg-white p-6 rounded-md w-80 ${isClosing ? 'fadeOut' : 'fadeIn'}`}>
+            className={`modal flex flex-col relative gap-2 bg-white p-6 rounded-md w-80 ${isClosing ? 'fadeOut' : 'fadeIn'}`}>
                 <button 
                 onClick={(e) => {
                     e.preventDefault();
@@ -90,7 +90,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                         setIsClosing(false)
                     }, 400)
                 }}
-                className="absolute top-2 right-2 hover:bg-zinc-300 rounded-full p-1 transition-all cursor-pointer">
+                className="absolute top-2 right-2 close-modal-btn hover:bg-zinc-300 rounded-full p-1 transition-all cursor-pointer">
                     <CloseIcon className="w-5"/>
                 </button>
                 <fieldset>
@@ -117,7 +117,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                 </fieldset>
                 <fieldset>
                     <label htmlFor="horaInicio">Hora Inicio <span className="text-red-600">*</span></label>
-                    <input type="time" name="horaInicio" required
+                    <input type="time" name="horaInicio" id="horaInicio" required
                     className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                     defaultValue={horarioData.horaInicio}
                     onChange={(e) => {
@@ -131,7 +131,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                 </fieldset>
                 <fieldset>
                     <label htmlFor="horaFin">Hora de Finalizacion <span className="text-red-600">*</span></label>
-                    <input type="time" name="horaFin" required
+                    <input type="time" name="horaFin" id="horafin" required
                     className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                     defaultValue={horarioData.horaFin}
                     onChange={(e) => {
@@ -145,7 +145,7 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
                 </fieldset>
                 <span className="text-xs text-red-600">{errors.errorHorario}</span>
                 <fieldset className="flex justify-center items-center pt-1">
-                    <button className="py-1.5 px-3 text-white bg-indigo-400 hover:bg-indigo-500 rounded-md cursor-pointer">{horario?.id ? 'Actualizar' : 'Agregar'}</button>
+                    <button className="py-1.5 px-3 text-white bg-indigo-600 hover:bg-indigo-700 rounded-md cursor-pointer">{horario?.id ? 'Actualizar' : 'Agregar'}</button>
                 </fieldset>
             </form>
         </div>

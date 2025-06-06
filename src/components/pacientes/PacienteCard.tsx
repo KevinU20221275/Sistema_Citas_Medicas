@@ -8,8 +8,8 @@ import { EdadIcon } from "../icons/Edad";
 export function PacienteCard({paciente, eliminar}: {paciente: IPacienteInfo, eliminar:(id:string) => void}){
     const {id, nombre, apellido, telefono, direccion, dui, peso, edad, altura, sexo } = paciente
     return (
-        <div className="flex flex-col justify-between bg-white rounded-md p-4 hover:shadow-md hover:shadow-zinc-400 transition-all">
-            <picture className="flex justify-center text-indigo-500">
+        <div className="card flex flex-col justify-between bg-white  rounded-md p-4 hover:shadow-md hover:shadow-zinc-400 transition-all">
+            <picture className="flex justify-center text-indigo-500 ">
                 <PacienteIcon className="w-20" />
             </picture>
             <div>
@@ -34,17 +34,17 @@ export function PacienteCard({paciente, eliminar}: {paciente: IPacienteInfo, eli
             <div className="grid grid-cols-2 gap-1.5 text-center py-2">
                 <a
                 href={`/agendarCita/${id}`}   
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
+                className="btn-card px-3 py-1 bg-indigo-400  dark:hover:bg-indigo-700 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
                 >Agendar Cita
                 </a>
         
                 <a href={`/pacientes-form/${id}`}
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all"
+                className="btn-card px-3 py-1 bg-indigo-400  dark:hover:bg-indigo-700 rounded-md text-xs text-white hover:bg-indigo-500 transition-all"
                 >Editar Paciente</a>
                         
                 <button
                 onClick={() => eliminar(id)}
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white cursor-pointer hover:bg-indigo-500 transition-all"
+                className="btn-card px-3 py-1 bg-indigo-400 dark:hover:bg-indigo-700 rounded-md text-xs text-white cursor-pointer hover:bg-indigo-500 transition-all"
                 >Eliminar Paciente</button>
             </div>
         </div>

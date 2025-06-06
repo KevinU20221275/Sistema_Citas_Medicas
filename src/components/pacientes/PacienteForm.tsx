@@ -180,11 +180,11 @@ export function PacienteForm({id} : {id? : string}){
                         <span className="text-xs text-red-600">{errors.alturaError}</span>
                     </fieldset>
                     <fieldset className="col-span-2 flex items-center justify-center">
-                        <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">Agregar</button>
+                        <button className="bg-indigo-400 dark:bg-indigo-600 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">Agregar</button>
                     </fieldset>
                 </form>
                 <div className="w-full hidden lg:flex justify-center items-center">
-                    <PacienteIcon className={'w-72 text-indigo-500'} />
+                    <PacienteIcon className={'w-72 text-indigo-500 icon-form'} />
                 </div>
             </article>
         </section>

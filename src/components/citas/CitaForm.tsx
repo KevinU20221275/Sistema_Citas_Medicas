@@ -126,7 +126,7 @@ export function CitaForm({id} : {id?:string}){
                                 <div>
                                     <h5>Dias de Trabajo del Medico: </h5>
                                     {
-                                        medicoHorarios?.map((h) => <span key={h.id} className="text-xs bg-indigo-400 text-white inline-block p-1 rounded-md mr-1">{h.dia} : {h.horaInicio} - {h.horaFin}</span>)
+                                        medicoHorarios?.map((h) => <span key={h.id} className="text-xs bg-indigo-400 dark:bg-indigo-500 text-white inline-block p-1 rounded-md mr-1">{h.dia} : {h.horaInicio} - {h.horaFin}</span>)
                                     }
                                     {
                                         medicoHorarios?.length === 0 && <p className="text-xs text-red-600">Este medico no tiene horarios Seleccione otro</p>
@@ -183,7 +183,7 @@ export function CitaForm({id} : {id?:string}){
                     <fieldset className={`col-span-2`}>
                         <label htmlFor="motivoConsulta" className="block mb-1">Motivo de Consulta <span className="text-red-600">*</span></label>
                         <textarea  id="motivoConsulta" placeholder="Consulta general" required
-                        className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full resize-none" 
+                        className={`p-2 border-[1px] border-zinc-300 rounded-lg bg-white  w-full resize-none ${(!citaData.medicoId || !citaData.hora) && 'opacity-20'}`} 
                         onChange={(e) => setCitaData({
                             ...citaData,
                             motivoConsulta : e.target.value
@@ -194,11 +194,11 @@ export function CitaForm({id} : {id?:string}){
                     </fieldset>
 
                     <fieldset className="col-span-2 flex items-center justify-center">
-                        <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">Agendar</button>
+                        <button className="btn-card bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-600">Agendar</button>
                     </fieldset>
                 </form>
                 <div className="w-full hidden lg:flex justify-center items-start">
-                    <CitaIcon className={'w-72 text-indigo-500'} />
+                    <CitaIcon className={'w-72 text-indigo-500 icon-form'} />
                 </div>
             </article>
         </section>

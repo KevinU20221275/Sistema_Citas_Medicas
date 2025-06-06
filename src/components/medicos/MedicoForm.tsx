@@ -48,7 +48,7 @@ export function MedicoForm({id} : {id? : string}){
         } else {
             agregarMedico(medicoData)
         }
-        
+
         setShowModal(true)
         formRef.current?.reset()
         setMedicoData({
@@ -150,8 +150,8 @@ export function MedicoForm({id} : {id? : string}){
                         />
                     </fieldset>
                     <fieldset>
-                        <label htmlFor="genero" className="block mb-1">Especialidad</label>
-                        <select name="genero" id="genero" required
+                        <label htmlFor="especialidad" className="block mb-1">Especialidad</label>
+                        <select name="especialidad" id="especialidad" required
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setMedicoData({
                             ...medicoData,
@@ -167,11 +167,11 @@ export function MedicoForm({id} : {id? : string}){
                         </select>
                     </fieldset>
                     <fieldset className="col-span-2 flex items-center justify-center">
-                        <button className="bg-indigo-400 text-white rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">{paramId ? 'Actualizar' : 'Agregar'}</button>
+                        <button className="bg-indigo-400 text-white dark:bg-indigo-600 rounded-lg py-1.5 px-8 cursor-pointer hover:bg-indigo-500">{paramId ? 'Actualizar' : 'Agregar'}</button>
                     </fieldset>
                 </form>
                 <div className="w-full hidden lg:flex justify-center items-center">
-                    <MedicoIcon className={'w-72 text-indigo-500'} />
+                    <MedicoIcon className={'w-72 text-indigo-500 icon-form'} />
                 </div>
             </article>
         </section>

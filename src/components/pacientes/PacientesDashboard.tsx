@@ -32,7 +32,7 @@ export function PacientesDashboard(){
     return (
         <section className="grid grid-cols-4 gap-2">
             <div className="col-span-4">
-                <input type="text" placeholder="Buscar paciente por Nombre o Apellido" className="px-4 bg-white py-2 rounded-md w-96"
+                <input type="text" placeholder="Buscar paciente por Nombre o Apellido" className="px-4 bg-white  py-2 rounded-md w-96"
                 onChange={(e) => setSearch(e.target.value)}
                 defaultValue={search}
                 />

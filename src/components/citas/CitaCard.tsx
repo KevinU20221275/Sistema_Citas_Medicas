@@ -18,13 +18,13 @@ export function CitaCard({cita, reprogramarCita, cambiarEstado, eliminarCita}: C
 
     return (
         <div 
-        className={`relative flex flex-col justify-between bg-white border-[1px] rounded-md p-4 hover:shadow-md hover:shadow-zinc-400 transition-all 
-        ${estado === EstadoConsulta.Completada ? 'border-green-700' : estado === EstadoConsulta.Cancelada ? 'border-red-600' : 'border-transparent'}
+        className={`card relative flex flex-col justify-between bg-white border-[1px] rounded-md p-4 hover:shadow-md hover:shadow-zinc-400 transition-all 
+        ${estado === EstadoConsulta.Completada ? 'border-green-700' : estado === EstadoConsulta.Cancelada ? 'border-red-600' : 'border-zinc-600'}
         `}>
             <span 
-            className={`absolute right-2 top-2 text-xs rounded-md px-1.5 py-0.5 
+            className={`absolute right-2 top-2 text-xs rounded-md px-1.5 py-0.5 text-white
                 ${estado === EstadoConsulta.Completada ? 'bg-green-700' :
-                estado === EstadoConsulta.Cancelada ? 'bg-red-600' : 'bg-zinc-200'
+                estado === EstadoConsulta.Cancelada ? 'bg-red-600' : 'bg-zinc-500'
              }`}>{estado}</span>
             <picture className="flex justify-center text-indigo-500">
                 <CitaIcon className="w-20" />
@@ -44,7 +44,7 @@ export function CitaCard({cita, reprogramarCita, cambiarEstado, eliminarCita}: C
                 onClick={() => {
                     reprogramarCita(id, fecha.toDateString(), hora, medicoId)
                 }}
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
+                className="btn-card px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
                 >Reprogramar Cita
                 </button>
 
@@ -52,13 +52,13 @@ export function CitaCard({cita, reprogramarCita, cambiarEstado, eliminarCita}: C
                 onClick={() => {
                     cambiarEstado(id, estado)
                 }}
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
+                className="btn-card px-3 py-1 bg-indigo-400 rounded-md text-xs text-white hover:bg-indigo-500 transition-all cursor-pointer"
                 >Actualizar Estado
                 </button>
                 
                 <button
                 onClick={() => eliminarCita(id)}
-                className="px-3 py-1 bg-indigo-400 rounded-md text-xs text-white cursor-pointer hover:bg-indigo-500 transition-all"
+                className="btn-card px-3 py-1 bg-indigo-400 rounded-md text-xs text-white cursor-pointer hover:bg-indigo-500 transition-all"
                 >Eliminar Cita</button>
             </div>
         </div>

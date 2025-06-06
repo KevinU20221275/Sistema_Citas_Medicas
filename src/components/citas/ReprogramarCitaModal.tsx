@@ -65,7 +65,7 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
             e.preventDefault()
             handleSubmit()
             }} 
-            className={`flex flex-col relative gap-2 bg-white p-6 rounded-md w-80 ${isClosing ? 'fadeOut' : 'fadeIn'}`}
+            className={`modal flex flex-col relative gap-2 bg-white p-6 rounded-md w-80 ${isClosing ? 'fadeOut' : 'fadeIn'}`}
             >
                 
                 <button 
@@ -77,14 +77,14 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                         setIsClosing(false)
                     }, 400)
                 }}
-                className="absolute top-2 right-2 hover:bg-zinc-300 rounded-full p-1 transition-all cursor-pointer">
+                className="absolute top-2 right-2 hover:bg-zinc-300 close-modal-btn rounded-full p-1 transition-all cursor-pointer">
                     <CloseIcon className="w-5"/>
                 </button>
                 <fieldset>
                      <div>
                         <h5 className="text-center">Dias de Trabajo del Medico</h5>
                         {
-                            medicoHorarios?.map((h) => <span key={h.id} className="text-xs bg-indigo-400 text-white inline-block p-1 rounded-md mr-1">{h.dia} : {h.horaInicio} - {h.horaFin}</span>)
+                            medicoHorarios?.map((h) => <span key={h.id} className="text-xs bg-indigo-400 dark:bg-indigo-600 text-white inline-block p-1 rounded-md mr-1">{h.dia} : {h.horaInicio} - {h.horaFin}</span>)
                         }
                     </div>
                 </fieldset>
@@ -133,7 +133,7 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                     </select>
                 </fieldset>
                 <fieldset className="flex justify-center items-center pt-1">
-                    <button className="py-1.5 px-3 text-white bg-indigo-400 hover:bg-indigo-500 rounded-md cursor-pointer">Reprogramar</button>
+                    <button className="py-1.5 px-3 text-white bg-indigo-400 dark:bg-indigo-600 hover:bg-indigo-500 rounded-md cursor-pointer">Reprogramar</button>
                 </fieldset>
             </form>
         </div>
