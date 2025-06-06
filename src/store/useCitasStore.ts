@@ -4,7 +4,11 @@ import type {ICita} from "src/types/ICitaInfo"
 import type { EstadoConsulta } from "src/types/EstadosConsulta";
 
 const citasIniciales: Cita[] = [
-
+    new Cita(crypto.randomUUID(), "pac001", "med001", new Date("2025-06-09T06:00:00.000Z"), "08:00", "Chequeo general", "Pendiente"),
+    new Cita(crypto.randomUUID(), "pac002", "med001", new Date("2025-06-09T06:00:00.000Z"), "08:20", "Consulta dermatológica", "Pendiente"),
+    new Cita(crypto.randomUUID(), "pac002", "med002", new Date("2025-06-11T06:00:00.000Z"), "14:00", "Consulta dermatológica", "Pendiente"),
+    new Cita(crypto.randomUUID(), "pac003", "med002", new Date("2025-06-11T06:00:00.000Z"), "14:20", "Consulta dermatológica", "Pendiente"),
+    new Cita(crypto.randomUUID(), "pac003", "med003", new Date("2025-06-13T06:00:00.000Z"), "08:00", "Consulta dermatológica", "Pendiente"),
 ];
 
 
