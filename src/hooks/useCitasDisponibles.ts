@@ -1,9 +1,9 @@
 import { getCitasDisponibles } from "@src/lib/getCitasDisponibles"
 import { validarDiaSeleccionado } from "@src/lib/validarDiaSeleccionado"
 import { useHorariosStore } from "@src/store/useHorariosStore"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
-export function useCitasDisponibles({medicoId, fechaCita}:{medicoId:string, fechaCita:Date}){
+export function useCitasDisponibles({medicoId, fechaCita}:{medicoId:string, fechaCita:string}){
     const [citasDisponibles, setCitasDisponibles] = useState<string[]>([])
     const horarios = useHorariosStore.getState().horarios
     const [fechaError, setFechaError] = useState('')
@@ -15,15 +15,16 @@ export function useCitasDisponibles({medicoId, fechaCita}:{medicoId:string, fech
             return horariosFiltrados
         } 
         []
-    }, [medicoId])
+    }, [medicoId, horarios])
     
-    const validarFecha = useMemo(() => {
+    useEffect(() => {
         if (medicoHorarios && medicoHorarios.length > 0 && fechaOperar){
             const {success, message, horariosDelDia} =  validarDiaSeleccionado(fechaOperar, medicoHorarios)
+            const parsedFecha = new Date(fechaCita)
     
             if (success){
                 if (horariosDelDia && medicoId) {
-                    const citas = getCitasDisponibles(fechaCita, horariosDelDia, medicoId)
+                    const citas = getCitasDisponibles(parsedFecha, horariosDelDia, medicoId)
                     setCitasDisponibles(citas)
                     setFechaError('')
                 }
@@ -34,7 +35,7 @@ export function useCitasDisponibles({medicoId, fechaCita}:{medicoId:string, fech
                 }
             }
         }
-    }, [fechaCita])
+    }, [fechaCita, fechaOperar, medicoHorarios, medicoId])
 
     return {citasDisponibles, medicoHorarios, fechaError, setFechaOperar,fechaOperar}
 }

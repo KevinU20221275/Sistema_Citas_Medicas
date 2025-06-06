@@ -23,7 +23,7 @@ export function CitaForm({id} : {id?:string}){
         ...INITIAL_STATE_CITA_FORM,
         id : crypto.randomUUID()
     })
-    const {citasDisponibles, medicoHorarios, fechaError, setFechaOperar, fechaOperar} = useCitasDisponibles({medicoId : citaData.medicoId, fechaCita : citaData.fecha})
+    const {citasDisponibles, medicoHorarios, fechaError, setFechaOperar, fechaOperar} = useCitasDisponibles({medicoId : citaData.medicoId, fechaCita : citaData.fecha.toDateString()})
     const agregarCita = useCitaStore((state) => state.agregarCita)
     const pacientes  = usePacienteStore((state) => state.pacientes)
     const {changeFilter, medicosFiltrados, filter} = useMedicosFilters()
@@ -52,7 +52,7 @@ export function CitaForm({id} : {id?:string}){
                 fechaError : ''
             }))
         }
-    }, [citaData.fecha])
+    }, [fechaError])
 
     const handleSubmit = () => {
         if (medicoHorarios?.length === 0) {
@@ -75,7 +75,7 @@ export function CitaForm({id} : {id?:string}){
         <section className="p-6">
             <h3 className="text-2xl text-center text-indigo-600 font-medium">Complete la siguiente informacion</h3>
             <MedicosFilterPanel className={''} filter={filter} changeFilter={changeFilter} />
-            {showModal && <ModalAlert redirect="/citas" mensaje={'Cita Agendada con exito'} closeModal={setShowModal} />}
+            {showModal && <ModalAlert redirect="/citas" reload="/agendarCita/nuevaCita" mensaje={'Cita Agendada con exito'} closeModal={setShowModal} />}
 
             <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-3">
                 <form ref={formRef} action=""
@@ -155,7 +155,6 @@ export function CitaForm({id} : {id?:string}){
                                 fecha : new Date(year, month - 1, day)
                             })
                         }}
-                        defaultValue={citaData.fecha.toISOString().split("T")[0]}
                         />
                         <span className="text-red-600 text-xs">{errors.fechaError}</span>
                     </fieldset>
