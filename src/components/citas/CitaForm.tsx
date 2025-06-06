@@ -19,7 +19,10 @@ import { useCitasDisponibles } from "@src/hooks/useCitasDisponibles"
 
 export function CitaForm({id} : {id?:string}){
     const paramId = id === "nuevaCita" ? undefined : id
-    const [citaData, setCitaData] = useState<ICita>(INITIAL_STATE_CITA_FORM)
+    const [citaData, setCitaData] = useState<ICita>({
+        ...INITIAL_STATE_CITA_FORM,
+        id : crypto.randomUUID()
+    })
     const {citasDisponibles, medicoHorarios, fechaError, setFechaOperar, fechaOperar} = useCitasDisponibles({medicoId : citaData.medicoId, fechaCita : citaData.fecha})
     const agregarCita = useCitaStore((state) => state.agregarCita)
     const pacientes  = usePacienteStore((state) => state.pacientes)
@@ -67,7 +70,6 @@ export function CitaForm({id} : {id?:string}){
         formRef.current?.reset()
         agregarCita(citaData)
     }
-    console.log(citaData)
 
     return (
         <section className="p-6">
