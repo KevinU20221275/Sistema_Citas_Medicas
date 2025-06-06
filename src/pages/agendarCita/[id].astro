@@ -9,6 +9,6 @@ interface Props {
 const {id} = Astro.params
 ---
 
-<Layout>
+<Layout title={`Citas Medicas | Agendar Cita`}>
     <CitaForm id={id}  client:visible />
 </Layout
