@@ -18,7 +18,7 @@ export function HeaderMenu(){
             <nav>
                 <ul className="flex gap-2">
                     <li>
-                        <ToggleTheme />
+                        {/* <ToggleTheme /> */}
                     </li>
                     <li>
                         <a href="/"

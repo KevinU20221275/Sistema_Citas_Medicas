@@ -22,10 +22,10 @@ const {title} = Astro.props
 	<body>
 		<div id="app" class="h-screen relative bg-[#FCF6FA] ">
 			
-			<header class="[grid-area:header] flex justify-between items-center border-b-[1px] border-zinc-300 px-4 py-3">
+			<header class="[grid-area:header] flex justify-between items-center border-b-[1px] border-zinc-300 px-4 py-3 min-h-16">
 				<HeaderMenu client:load/>
 			</header>
-			<aside class="[grid-area:aside] py-8 px-6 border-r-[1px] border-zinc-300">
+			<aside class="[grid-area:aside] py-8 px-6 border-r-[1px] border-zinc-300 w-52">
 				<AsideMenu client:load/>
 			</aside>
 			<main class="[grid-area:main] overflow-y-auto">
@@ -104,6 +104,12 @@ const {title} = Astro.props
 		}
 		.toggle-btn-wrapper {
 			background-color: oklch(27.4% 0.006 286.033);
+		}
+		header {
+			border-bottom: 1px solid oklch(27.4% 0.006 286.033);
+		}
+		aside {
+			border-right: 1px solid  oklch(27.4% 0.006 286.033);
 		}
 	}
 
