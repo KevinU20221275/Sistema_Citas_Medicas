@@ -41,21 +41,24 @@ export function FormModalHorario({horario, medicoId, closeModal, resetHorarioDat
             })
             return
         } 
+
         const horarioMedico = horarios.filter((h) => h.dia === horarioData.dia && h.medicoId === horarioData.medicoId)
 
-        if (horarioMedico.length > 0){
-            const hasHorario = horarioMedico.some((h) =>
-                !(horarioData.horaFin <= h.horaInicio || horarioData.horaInicio >= h.horaFin)
-            )
+            if (horarioMedico.length > 0){
+                const hasHorario = horarioMedico.some((h) =>
+                    h.id !== horarioData.id &&
+                    !(horarioData.horaFin <= h.horaInicio || horarioData.horaInicio >= h.horaFin)
+                )
 
-            if (hasHorario) {
-                setErrors((prev) => ({
-                    ...prev,
-                    errorHorario: 'El médico ya posee un horario que se solapa con las horas ingresadas. Por favor, elige un horario diferente o edita el existente.'
-                }))
-                return 
+                if (hasHorario) {
+                    setErrors((prev) => ({
+                        ...prev,
+                        errorHorario: 'El médico ya posee un horario que se superpone con el ingresado. Por favor, elige ingresa un horario diferente o edita el existente.'
+                    }))
+                    return 
+                }
             }
-        }
+        
 
         if (horario?.id){
             actualizarHorario(horarioData)
