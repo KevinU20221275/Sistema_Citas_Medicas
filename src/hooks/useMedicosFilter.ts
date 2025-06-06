@@ -4,7 +4,7 @@ import { useMedicoStore } from "src/store/useMedicoStore";
 
 export function useMedicosFilters(){
     const [filter, setFilter] = useState<string>('all')
-    const medicos = useMedicoStore((state) => state.medicos)
+    const medicos = useMedicoStore.getState().medicos
     const horarios = useHorariosStore.getState().horarios
 
     const changeFilter = (newFilter: string) => {
