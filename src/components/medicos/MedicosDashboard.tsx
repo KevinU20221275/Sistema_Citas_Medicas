@@ -1,5 +1,5 @@
 // import hooks
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMedicosFilters } from "src/hooks/useMedicosFilter";
 // import types
 import type { IHorarioInfo } from "src/types/IHorarioInfo";
@@ -13,6 +13,7 @@ export function MedicosDashboard(){
     const [horario, setHorario] = useState<IHorarioInfo | undefined>()
     const [medicoId,setMedicoId] = useState<string | undefined>(undefined)
     const { medicosFiltrados, filter, changeFilter } = useMedicosFilters()
+    const [mounted, setMounted] = useState(false);
 
     const handleAgregarhorario = (id: string) => {
         setMedicoId(id)
@@ -24,7 +25,11 @@ export function MedicosDashboard(){
         setShowModal(true)
     }
 
-    console.log(medicosFiltrados)
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
 
     return (
         <section className="grid grid-cols-4 gap-2">

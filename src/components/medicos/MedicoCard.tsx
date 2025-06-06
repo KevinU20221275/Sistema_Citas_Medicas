@@ -45,7 +45,7 @@ export function MedicoCard({medico, agregarHorario, actualizarHorario}: CardProp
                             </li>
                         ))
                     }
-                    {horariosDelMedico.length === 0 && <p>No hay horarios</p>}
+                    {horariosDelMedico.length === 0 && <li>No hay horarios</li>}
                 </ul>
             </div>
             <div className="grid grid-cols-2 gap-1.5 text-center py-2">

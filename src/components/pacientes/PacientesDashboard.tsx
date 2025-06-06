@@ -1,9 +1,10 @@
 import { usePacienteStore } from "src/store/usePacientesStore"
 import { PacienteCard } from "./PacienteCard"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 export function PacientesDashboard(){
     const [search, setSearch] = useState<string>('')
+    const [mounted, setMounted] = useState(false);
 
     const pacientes = usePacienteStore((state) => state.pacientes)
     const eliminarPaciente = usePacienteStore((state) => state.eliminarPaciente)
@@ -21,6 +22,12 @@ export function PacientesDashboard(){
     const handleDelete = (id:string) => {
         eliminarPaciente(id)
     }
+    
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
 
     return (
         <section className="grid grid-cols-4 gap-2">
