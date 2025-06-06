@@ -1,41 +1,32 @@
-import { useEffect, useMemo, useState } from "react"
+// hooks
+import { useEffect, useRef, useState } from "react"
+// stores
 import { useCitaStore } from "src/store/useCitasStore"
 import { usePacienteStore } from "src/store/usePacientesStore"
-import { EstadoConsulta } from "src/types/EstadosConsulta"
+// types
 import type { ICita } from "src/types/ICitaInfo"
+// icons
 import { CitaIcon } from "../icons/CitaIcon"
-import { useHorariosStore } from "src/store/useHorariosStore"
-import { getCitasDisponibles } from "src/lib/getCitasDisponibles"
+// custom hooks
 import { useMedicosFilters } from "src/hooks/useMedicosFilter"
-import { validarDiaSeleccionado } from "src/lib/validarDiaSeleccionado"
+// components
+import { ModalAlert } from "../ModalAlert"
 import { MedicosFilterPanel } from "../medicos/MedicosFilterView"
+// const 
+import { INITIAL_STATE_CITA_FORM, INITIAL_STATE_CITA_FORM_ERRORS } from "@src/const/initialsStates"
+// functions
+import { useCitasDisponibles } from "@src/hooks/useCitasDisponibles"
 
 export function CitaForm({id} : {id?:string}){
     const paramId = id === "nuevaCita" ? undefined : id
-    const citas = useCitaStore((state) => state.citas)
+    const [citaData, setCitaData] = useState<ICita>(INITIAL_STATE_CITA_FORM)
+    const {citasDisponibles, medicoHorarios, fechaError, setFechaOperar, fechaOperar} = useCitasDisponibles({medicoId : citaData.medicoId, fechaCita : citaData.fecha})
     const agregarCita = useCitaStore((state) => state.agregarCita)
     const pacientes  = usePacienteStore((state) => state.pacientes)
-    const horarios = useHorariosStore((state) => state.horarios)
-
-    const [citaData, setCitaData] = useState<ICita>({
-        id: crypto.randomUUID(),
-        pacienteId: '',
-        medicoId: '',
-        fecha: new Date(),
-        hora: '',
-        motivoConsulta: '',
-        estado : EstadoConsulta.Pendiente
-    })
-
-    const [fechaOperar, setFechaOperar] = useState<Date>()
-
     const {changeFilter, medicosFiltrados, filter} = useMedicosFilters()
-    const [citasDisponibles, setCitasDisponibles] = useState<string[]>([])
-
-    const [errors, setErrors] = useState({
-        fechaError : '',
-        horaError : ''
-    })
+    const [errors, setErrors] = useState(INITIAL_STATE_CITA_FORM_ERRORS)
+    const [showModal, setShowModal] = useState(false)
+    const formRef = useRef<HTMLFormElement | null>(null)
 
     useEffect(() => {
         if (paramId){
@@ -46,46 +37,46 @@ export function CitaForm({id} : {id?:string}){
         }
     }, [paramId])
 
-    const medicoHorarios = useMemo(() => {
-        if (citaData.medicoId){
-            const horariosFiltrados = horarios.filter((h) => h.medicoId === citaData.medicoId)
-            return horariosFiltrados
-        } 
-        []
-    }, [citaData.medicoId])
-
-    const validarFecha = useMemo(() => {
-        if (medicoHorarios && medicoHorarios.length > 0 && fechaOperar){
-            const {success, message, horariosDelDia} =  validarDiaSeleccionado(fechaOperar, medicoHorarios)
-
-            if (success){
-                if (horariosDelDia) {
-                    const citas = getCitasDisponibles(citaData.fecha, horariosDelDia, citaData.medicoId)
-                    setCitasDisponibles(citas)
-                }
-            } else {
-                setCitasDisponibles([])
-                if (message){
-                    setErrors(prev => ({
-                        ...prev,
-                        fechaError: message
-                    }))
-                }
-            }
+    useEffect(() => {
+        if (fechaError){
+            setErrors((prev) => ({
+                ...prev,
+                fechaError : fechaError
+            }))
+        } else {
+            setErrors((prev) => ({
+                ...prev,
+                fechaError : ''
+            }))
         }
     }, [citaData.fecha])
 
     const handleSubmit = () => {
+        if (medicoHorarios?.length === 0) {
+            setErrors((prev) => ({
+                ...prev,
+                medicoHorariosError : 'El medico seleccionado no tiene horarios, por favor seleccione otro medico'
+            }))
+            return
+        }
+        setShowModal(true)
+        setCitaData({
+            ...INITIAL_STATE_CITA_FORM,
+            id : crypto.randomUUID()
+        })
+        formRef.current?.reset()
         agregarCita(citaData)
     }
+    console.log(citaData)
 
     return (
         <section className="p-6">
             <h3 className="text-2xl text-center text-indigo-600 font-medium">Complete la siguiente informacion</h3>
             <MedicosFilterPanel className={''} filter={filter} changeFilter={changeFilter} />
+            {showModal && <ModalAlert redirect="/citas" mensaje={'Cita Agendada con exito'} closeModal={setShowModal} />}
 
             <article className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-3">
-                <form action=""
+                <form ref={formRef} action=""
                 onSubmit={(e) => {
                     e.preventDefault();
                     handleSubmit()
@@ -114,7 +105,9 @@ export function CitaForm({id} : {id?:string}){
                         className="p-2 border-[1px] border-zinc-300 rounded-lg bg-white w-full"
                         onChange={(e) => setCitaData({
                             ...citaData,
-                            medicoId : e.target.value
+                            medicoId : e.target.value,
+                            fecha : new Date(),
+                            hora: ''
                         })}
                         defaultValue={citaData.medicoId}
                         >   
