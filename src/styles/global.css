@@ -32,3 +32,12 @@
         transform: translateY(40px);
     }
 }
+
+@keyframes show {
+	from {
+		scale: 0;
+	} 
+	to {
+		scale: 1;
+	}
+}
