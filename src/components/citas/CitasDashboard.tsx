@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CitaCard } from "./CitaCard";
 import { ReprogramarCitaModal } from "./ReprogramarCitaModal";
 import { ActualizarEstadoModal } from "./ActualizarEstadoModal";
@@ -10,6 +10,7 @@ import { useCitasFilter } from "src/hooks/useCitasFilter";
 export function CitasDashboard(){
     const {citasFiltradas, filters, setFilters} = useCitasFilter()
     const eliminarCita = useCitaStore((state) => state.eliminarCita)
+    const [mounted, setMounted] = useState(false);
     const [dataEstado, setDataEstado] = useState({
         id: '',
         estado: EstadoConsulta.Pendiente
@@ -47,6 +48,12 @@ export function CitasDashboard(){
     const handleDelete = (id:string) => {
         eliminarCita(id)
     }
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+    
+    if (!mounted) return null;
 
     return (
         <section className="grid grid-cols-4 gap-2">
