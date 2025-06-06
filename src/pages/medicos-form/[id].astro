@@ -10,5 +10,5 @@ const {id} = Astro.params
 ---
 
 <Layout title={`Citas Medicas | ${id ? 'Actualizar' : 'Agregar'} Medico`}>
-    <MedicoForm id={id}  client:visible />
+    <MedicoForm id={id}  client:load />
 </Layout>
