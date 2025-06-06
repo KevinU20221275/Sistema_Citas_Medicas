@@ -1,9 +1,7 @@
 import { CloseIcon } from "../icons/CloseIcon";
-import { validarDiaSeleccionado } from "src/lib/validarDiaSeleccionado";
-import { useHorariosStore } from "src/store/useHorariosStore";
-import { getCitasDisponibles } from "src/lib/getCitasDisponibles";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCitaStore } from "src/store/useCitasStore";
+import { useCitasDisponibles } from "@src/hooks/useCitasDisponibles";
 
 interface ReprogramarCitaModalProps {
     citaId:string;
@@ -20,43 +18,32 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
         fechaOperar: null
     })
     const [isClosing, setIsClosing] = useState(false)
-    const [citasDisponibles, setCitasDisponibles] = useState<string[]>([])
     const [errors, setErrors] = useState({
         fechaError: '',
         horaError: ''
     })
-    const horarios = useHorariosStore((state) => state.horarios)
     const reprogramarCita = useCitaStore((state) => state.reprogramarCita)
+    const {citasDisponibles, fechaError, setFechaOperar, medicoHorarios} = useCitasDisponibles({medicoId, fechaCita : fecha })
 
-    const medicoHorarios = useMemo(() => {
-        return horarios.filter((h) => h.medicoId === medicoId)
-    }, [medicoId])
-    
-    const validarFecha = useMemo(() => {
-        if (medicoHorarios && medicoHorarios.length > 0 && data.fechaOperar){
-            const {success, message, horariosDelDia} =  validarDiaSeleccionado(data.fechaOperar, medicoHorarios)
-            
-            if (success){
-                if (horariosDelDia) {
-                    const citas = getCitasDisponibles(data.fechaOperar, horariosDelDia, medicoId)
-                    setCitasDisponibles(citas)
-                }
+    useEffect(() => {
+        if (fechaError){
+                setErrors((prev) => ({
+                    ...prev,
+                    fechaError : fechaError
+                }))
             } else {
-                setCitasDisponibles([])
-                if (message){
-                    setErrors(prev => ({
-                        ...prev,
-                        fechaError: message
-                    }))
-                }
+                setErrors((prev) => ({
+                    ...prev,
+                    fechaError : ''
+                }))
             }
-        }
-    }, [data.fecha])
+        }, [fechaError])
 
     const handleSubmit = () => {
-        if (data.fecha instanceof Date && !errors.fechaError && !errors.horaError)
-        reprogramarCita(citaId, data.fecha, data.hora)
-        closeModal(false)
+        if (data.fecha instanceof Date && !errors.fechaError && !errors.horaError){
+            reprogramarCita(citaId, data.fecha, data.hora)
+            closeModal(false)
+        }
     }
 
     return (
@@ -99,6 +86,8 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                             fechaError: ''
                         }))
 
+                        setFechaOperar(new Date(e.target.value))
+
                         const [year, month, day] = e.target.value.split("-").map(Number)
                             
                         setData({
@@ -107,7 +96,6 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                             fechaOperar: new Date(e.target.value)
                         })
                     }}
-                    defaultValue={data.fecha instanceof Date ? data.fecha.toISOString().split("T")[0] : ''}
                     />
                     <span className="text-red-600 text-xs">{errors.fechaError}</span>
                 </fieldset>
@@ -118,7 +106,6 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                     className={`p-2 border-[1px] rounded-lg bg-white w-full
                     ${(errors.fechaError || !data.fecha) && 'pointer-events-none border-1px opacity-20 cursor-not-allowed'} 
                     ${errors.horaError ? 'border-red-600' : 'border-zinc-300'}`}
-                    value={data.hora}
                     onChange={(e) =>
                         setData({
                             ...data,
@@ -126,7 +113,6 @@ export function ReprogramarCitaModal({citaId, fecha, hora, closeModal, medicoId}
                         })
                     }
                     disabled={!citasDisponibles.length}
-                    defaultValue={data.hora}
                     >
                         <option value="">Seleccione una hora</option>
                             {citasDisponibles.map((hora) => <option key={hora} value={hora}>{hora}</option>)}
