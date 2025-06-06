@@ -56,12 +56,12 @@ export function CitasDashboard(){
     if (!mounted) return null;
 
     return (
-        <section className="grid grid-cols-4 gap-2">
+        <section className="grid grid-cols-3 gap-2">
             {estadoModal && <ActualizarEstadoModal id={dataEstado.id} estado={dataEstado.estado} closeModal={setEstadoModal} />}
             {showModal && <ReprogramarCitaModal citaId={dataCita.id} fecha={dataCita.fecha} hora={dataCita.hora} medicoId={dataCita.medicoId} closeModal={setShowModal}  />}
-            <CitasFiltersPanel className="col-span-4" filters={filters} setFilters={setFilters} />
+            <CitasFiltersPanel className="col-span-3" filters={filters} setFilters={setFilters} />
             {
-                citasFiltradas.reverse().map((c) => <CitaCard key={c.id} cita={c} reprogramarCita={handleReprogramarCita} cambiarEstado={handleCambiarEstado} eliminarCita={handleDelete} />)
+                citasFiltradas.map((c) => <CitaCard key={c.id} cita={c} reprogramarCita={handleReprogramarCita} cambiarEstado={handleCambiarEstado} eliminarCita={handleDelete} />)
             }
             {
                 citasFiltradas.length === 0 && <p className="text-zinc-600">No hay citas</p>

@@ -9,7 +9,7 @@ export function CitasFiltersPanel({className, filters, setFilters} : CitasFilter
                 <div className="grid grid-cols-2 items-center justify-around w-full px-4 gap-4">
                     <fieldset className="col-span-2 flex gap-2 items-center justify-center">
                         <button 
-                        className={`${citas === CITAS_FILTERS.TODAS ? 'bg-indigo-500 filter-btn-active hover:bg-indigo-600 text-white' : 'bg-zinc-200 filter-btn-inactive hover:bg-indigo-200 dark:hover:bg-zinc-700'} px-3 py-1 rounded-full cursor-pointer  transition-all`}
+                        className={`${citas === CITAS_FILTERS.TODAS ? 'bg-indigo-500 filter-btn-active hover:bg-indigo-600 text-white' : 'bg-zinc-200 filter-btn-inactive hover:bg-indigo-200 '} px-3 py-1 rounded-full cursor-pointer  transition-all`}
                         onClick={() => setFilters(prev => ({
                             ...prev,
                             citas : CITAS_FILTERS.TODAS
