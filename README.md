@@ -1,38 +1,70 @@
-# Astro Starter Kit: Basics
+# 🩺 Sistema de Gestión de Citas Médicas
 
-```sh
-pnpm create astro@latest -- --template basics
+Este proyecto es una aplicación web desarrollada con **Astro**, **React** y **TypeScript**, que permite gestionar un sistema de citas médicas con enfoque en **programación orientada a objetos (POO)**.
+
+El sistema permite registrar y gestionar:
+- **Pacientes**
+- **Médicos**
+- **Horarios de atención**
+- **Citas médicas**
+
+Cada entidad fue modelada como una clase con sus respectivos métodos CRUD.
+
+## ⚙️ Funcionalidades Principales
+
+- **CRUD completo** para pacientes, médicos, horarios y citas.
+- **Asignación de horarios** a los médicos.
+- **Validación de disponibilidad** al crear una cita: no se permite agendar si ya existe otra cita con el mismo médico en la misma fecha y hora.
+- **Reprogramación de citas** (solo se puede modificar fecha y estado).
+- **Filtros avanzados** para buscar citas por:
+  - Paciente
+  - Médico
+  - Estado (Pendiente, Cancelada, Completada)
+  - Combinaciones de los anteriores
+
+## 🧠 Arquitectura y Tecnologías Usadas
+
+- **Astro** – Framework web para sitios rápidos con componentes modernos.
+- **React** – Librería de interfaces basada en componentes.
+- **TypeScript** – Superset de JavaScript con tipado estático.
+- **Zustand** – Librería ligera para manejo de estado global.
+- **Jest** – Framework de pruebas para validar la lógica de clases.
+- **Trello** – Herramienta para la organización y asignación de tareas.
+
+## 🧪 Pruebas
+
+Se implementaron **pruebas unitarias con Jest** para validar el correcto funcionamiento de las clases, enfocándose en la lógica de negocio y operaciones CRUD.
+
+## ✅ Requisitos
+
+- Node.js >= 18
+- pnpm >= 8
+
+## 🚀 Instalación y Uso
+
+1. Clonar el repositorio:
+```bash
+   git clone https://github.com/KevinU20221275/Sistema_Citas_Medicas.git
+   cd Sistema_Citas_Medicas
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+2. Intalar las dependecias
+```bash
+pnpm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3. Ejecutar en modo desarrollo
+```bash
+pnpm dev
+```
+4. Ejecutar test
+```bash
+pnpm test
+```
 
-## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+## 🧞 Comandos
+Todos los comandos son ejecutados desde la raiz del proyecto, desde una terminal
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
@@ -42,7 +74,3 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
