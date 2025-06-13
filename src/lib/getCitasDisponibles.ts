@@ -30,7 +30,7 @@ export const getCitasDisponibles = (fecha: Date, horarios: Horario[], medicoId: 
         return (
             citaFecha.getFullYear() === fecha.getFullYear() &&
             citaFecha.getMonth() === fecha.getMonth() &&
-            citaFecha.getDay() === fecha.getDay() &&
+            citaFecha.getDate() === fecha.getDate() &&
             c.medicoId == medicoId
         )
     })
