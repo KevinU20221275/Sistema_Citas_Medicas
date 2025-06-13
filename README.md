@@ -44,8 +44,8 @@ Se implementaron **pruebas unitarias con Jest** para validar el correcto funcion
 
 1. Clonar el repositorio:
 ```bash
-   git clone https://github.com/KevinU20221275/Sistema_Citas_Medicas.git
-   cd Sistema_Citas_Medicas
+git clone https://github.com/KevinU20221275/Sistema_Citas_Medicas.git
+cd Sistema_Citas_Medicas
 ```
 
 2. Intalar las dependecias
